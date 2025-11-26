@@ -39,9 +39,9 @@ def init_classifier():
     print("Initializing YOLOv8 Classifier")
     print("=" * 60)
 
-    # Use xlarge model for best accuracy
+    # Use medium model by default (good balance)
     # Options: 'n' (fastest), 's', 'm', 'l', 'x' (most accurate)
-    classifier = YOLOClassifier(model_size='x', threshold=0.5)
+    classifier = YOLOClassifier(model_size='m', threshold=0.5)
 
     print("=" * 60)
     print("✓ YOLOv8 Model Ready!")

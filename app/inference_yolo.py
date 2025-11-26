@@ -15,7 +15,7 @@ class YOLOClassifier:
     Pre-trained on COCO dataset (80 classes)
     """
 
-    def __init__(self, model_size='x', threshold=0.5):
+    def __init__(self, model_size='m', threshold=0.5):
         """
         Initialize YOLOv8 classifier
 
