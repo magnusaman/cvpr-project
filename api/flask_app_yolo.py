@@ -20,7 +20,13 @@ from app.config import UPLOAD_FOLDER, ALLOWED_EXTENSIONS, MAX_CONTENT_LENGTH
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = MAX_CONTENT_LENGTH
-CORS(app)
+
+# CORS Configuration - Allow frontend to access API
+CORS(app, origins=[
+    'http://localhost:5173',  # Local development
+    'https://objectvision-frontend.onrender.com',  # Production frontend (update after deploy)
+    'https://*.onrender.com'  # All Render domains
+])
 
 # Initialize classifier (global instance)
 classifier = None
