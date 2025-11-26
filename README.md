@@ -324,7 +324,7 @@ This project was developed by students from RGIPT as part of CVPR Project 2024:
 - Tanmay Amrutkar (22IT3006) - [LinkedIn](https://www.linkedin.com/in/tanmay-amrutkar/)
 - Arnav Sao (22IT3009) - [LinkedIn](https://www.linkedin.com/in/arnavsao/)
 - Aryan Singh (22IT3010) - [LinkedIn](https://www.linkedin.com/in/aryankumarsingh0704/)
-- Jagriti Priya (22IT3017) - [LinkedIn](https://www.linkedin.com/in/jagritipriya21/)
+- Jagriti Priya (22IT3018) - [LinkedIn](https://www.linkedin.com/in/jagritipriya21/)
 - Payal Singh (22IT3028) - [LinkedIn](https://www.linkedin.com/in/payalsingh2209/)
 
 ## Contact

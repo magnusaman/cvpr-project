@@ -8,7 +8,7 @@ const teamMembers = [
     initials: 'AA',
     linkedin: 'https://www.linkedin.com/in/aman7anand/',
     github: 'https://github.com/magnusaman',
-    linkedinImage: 'https://media.licdn.com/dms/image/v2/D5603AQH8ZxuT0yxGNg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1729522487206?e=1740614400&v=beta&t=xQxEYqBKr8YsJJd0gKvZCf0x9C1VwPfCwE8LFYzTjYE',
+    image: '/team/22it3004.png',
     color: 'from-primary-500 to-blue-500'
   },
   {
@@ -16,7 +16,7 @@ const teamMembers = [
     name: 'Aayush Kumar',
     initials: 'AK',
     linkedin: 'https://www.linkedin.com/in/aayush-kumar-debugging/',
-    linkedinImage: 'https://media.licdn.com/dms/image/v2/D5603AQEhsqJVEqKRbw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1729265842784?e=1740614400&v=beta&t=9vHxGqZr6kY8Bs3vYOZqVLPcPzQlNj_U7j5nH6dLqNo',
+    image: '/team/22it3001.png',
     color: 'from-purple-500 to-pink-500'
   },
   {
@@ -24,7 +24,7 @@ const teamMembers = [
     name: 'Aditya Kumar',
     initials: 'AK',
     linkedin: 'https://www.linkedin.com/in/adityakumar8018/',
-    linkedinImage: 'https://media.licdn.com/dms/image/v2/D5603AQGxTnT-A-dIEw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1711650772959?e=1740614400&v=beta&t=9nZxKzQpJTqaZxJFXN-6pZMnHg8jKLVzNlKq3s7eVAc',
+    image: '/team/22it3002.png',
     color: 'from-green-500 to-teal-500'
   },
   {
@@ -32,7 +32,7 @@ const teamMembers = [
     name: 'Akshat Goyal',
     initials: 'AG',
     linkedin: 'https://www.linkedin.com/in/akshatg1403/',
-    linkedinImage: 'https://media.licdn.com/dms/image/v2/D5603AQHJpnQVYTKi6g/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1709405482169?e=1740614400&v=beta&t=3J0i7h3wXZqT6FqVLb8mYUHBXBOLd5qJYLB6qJxZxqo',
+    image: '/team/22it3003.png',
     color: 'from-orange-500 to-red-500'
   },
   {
@@ -40,7 +40,7 @@ const teamMembers = [
     name: 'Aman Kumar Gupta',
     initials: 'AKG',
     linkedin: 'https://www.linkedin.com/in/amangupta8864/',
-    linkedinImage: 'https://media.licdn.com/dms/image/v2/D5603AQFfGqI5aWGQ0g/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1709302815425?e=1740614400&v=beta&t=nVxEBCQVEqr8cKG9pLYLB6WqF7Z0FQxl0qLvYQvZgVE',
+    image: '/team/22it3005.png',
     color: 'from-cyan-500 to-blue-500'
   },
   {
@@ -48,7 +48,7 @@ const teamMembers = [
     name: 'Tanmay Amrutkar',
     initials: 'TA',
     linkedin: 'https://www.linkedin.com/in/tanmay-amrutkar/',
-    linkedinImage: 'https://media.licdn.com/dms/image/v2/D5603AQG-NMGp5gY2Aw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1720705382542?e=1740614400&v=beta&t=vy8vgYZjqPVzI5IqpzYqvQpjYVwqwLqPvFqQvZgxqJE',
+    image: '/team/22it3006.png',
     color: 'from-yellow-500 to-orange-500'
   },
   {
@@ -56,7 +56,7 @@ const teamMembers = [
     name: 'Arnav Sao',
     initials: 'AS',
     linkedin: 'https://www.linkedin.com/in/arnavsao/',
-    linkedinImage: 'https://media.licdn.com/dms/image/v2/D5603AQHcVF0BT-VxGw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1713076954088?e=1740614400&v=beta&t=7nJqZFqLqJqLqJqLqJqLqJqLqJqLqJqLqJqLqJqLqJE',
+    image: '/team/22it3009.png',
     color: 'from-indigo-500 to-purple-500'
   },
   {
@@ -64,15 +64,15 @@ const teamMembers = [
     name: 'Aryan Singh',
     initials: 'AS',
     linkedin: 'https://www.linkedin.com/in/aryankumarsingh0704/',
-    linkedinImage: 'https://media.licdn.com/dms/image/v2/D4D03AQGFqJqLqJqLqJ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1709302815425?e=1740614400&v=beta&t=nVxEBCQVEqr8cKG9pLYLB6WqF7Z0FQxl0qLvYQvZgVE',
+    image: '/team/22it3010.png',
     color: 'from-pink-500 to-rose-500'
   },
   {
-    rollNo: '22IT3017',
+    rollNo: '22IT3018',
     name: 'Jagriti Priya',
     initials: 'JP',
     linkedin: 'https://www.linkedin.com/in/jagritipriya21/',
-    linkedinImage: 'https://media.licdn.com/dms/image/v2/D5603AQHFqJqLqJqLqJ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1709302815425?e=1740614400&v=beta&t=nVxEBCQVEqr8cKG9pLYLB6WqF7Z0FQxl0qLvYQvZgVE',
+    image: '/team/22it3018.png',
     color: 'from-violet-500 to-purple-500'
   },
   {
@@ -80,7 +80,7 @@ const teamMembers = [
     name: 'Payal Singh',
     initials: 'PS',
     linkedin: 'https://www.linkedin.com/in/payalsingh2209/',
-    linkedinImage: 'https://media.licdn.com/dms/image/v2/D5603AQGFqJqLqJqLqJ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1709302815425?e=1740614400&v=beta&t=nVxEBCQVEqr8cKG9pLYLB6WqF7Z0FQxl0qLvYQvZgVE',
+    image: '/team/22it3028.png',
     color: 'from-emerald-500 to-green-500'
   }
 ]
@@ -118,7 +118,7 @@ export default function Team() {
             <div className={`absolute inset-0 bg-gradient-to-br ${member.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}></div>
 
             <div className="relative">
-              {/* Avatar - LinkedIn image with fallback to initials */}
+              {/* Avatar - Profile image with fallback to initials */}
               <div className="mb-4 mx-auto">
                 <motion.div
                   whileHover={{ scale: 1.1 }}
@@ -126,14 +126,15 @@ export default function Team() {
                   className={`w-24 h-24 mx-auto rounded-full bg-gradient-to-br ${member.color} flex items-center justify-center text-white text-2xl font-bold shadow-xl overflow-hidden border-2 border-white/20`}
                 >
                   <img
-                    src={member.linkedinImage}
+                    src={member.image}
                     alt={member.name}
                     className="w-full h-full object-cover"
                     onError={(e) => {
                       e.target.style.display = 'none';
-                      e.target.parentElement.innerHTML = `<span class="text-2xl font-bold">${member.initials}</span>`;
+                      e.target.nextElementSibling?.classList.remove('hidden');
                     }}
                   />
+                  <span className="text-2xl font-bold hidden">{member.initials}</span>
                 </motion.div>
               </div>
 
