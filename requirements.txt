@@ -1,0 +1,33 @@
+# Core ML frameworks
+tensorflow>=2.10.0
+keras>=2.10.0
+
+# Image processing
+Pillow>=9.0.0
+
+# Data handling
+numpy>=1.21.0
+pandas>=1.3.0
+
+# Web frameworks
+flask>=2.0.0
+flask-cors>=3.0.10
+streamlit>=1.20.0
+
+# Visualization
+matplotlib>=3.5.0
+plotly>=5.0.0
+
+# Utilities
+werkzeug>=2.0.0
+requests>=2.27.0
+
+# Optional: For better performance
+scikit-learn>=1.0.0
+
+# YOLOv8 for pre-trained object detection (RECOMMENDED!)
+ultralytics>=8.0.0
+
+# Development dependencies (optional)
+jupyter>=1.0.0
+ipython>=7.30.0

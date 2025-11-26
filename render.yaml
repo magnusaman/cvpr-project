@@ -1,0 +1,24 @@
+services:
+  # Backend API
+  - type: web
+    name: objectvision-api
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python api/flask_app_yolo.py
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: PORT
+        value: 5000
+    healthCheckPath: /api/health
+
+  # Frontend
+  - type: web
+    name: objectvision-frontend
+    env: static
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: ./frontend/dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

@@ -1,351 +1,339 @@
-# 🏷️ Multi-Label Image Classification
-### PASCAL VOC 2007 Challenge
+# ObjectVision AI - Advanced Object Detection
 
-[![Python](https://img.shields.io/badge/Python-3.7+-blue.svg)](https://www.python.org/downloads/)
-[![TensorFlow](https://img.shields.io/badge/TensorFlow-2.0+-orange.svg)](https://www.tensorflow.org/)
-[![Keras](https://img.shields.io/badge/Keras-2.0+-red.svg)](https://keras.io/)
+![ObjectVision AI](https://img.shields.io/badge/AI-Object%20Detection-blueviolet)
+![YOLOv8](https://img.shields.io/badge/YOLOv8-Medium-green)
+![COCO](https://img.shields.io/badge/Dataset-COCO-orange)
+![React](https://img.shields.io/badge/React-18.2-blue)
+![Flask](https://img.shields.io/badge/Flask-API-lightgrey)
 
-> **📖 Detailed Blog Post:** For an in-depth walkthrough with theoretical explanations, code analysis, and architectural insights, check out the comprehensive blog post: [**Multi-Label Image Classification: Three Architectures Compared**](https://analyticalman.com/multi-label-image-classification/)
+A state-of-the-art object detection web application powered by YOLOv8 architecture, trained on the comprehensive COCO dataset. Detect 80+ object classes with real-time processing and exceptional accuracy.
 
----
+## Features
 
-## 🎯 Project Overview
+- **Lightning Fast**: Real-time object detection with millisecond inference speeds
+- **High Accuracy**: ~50% mAP accuracy using YOLOv8 architecture
+- **80+ Classes**: Detect a wide variety of objects from the COCO dataset
+- **Beautiful UI**: Modern, professional React frontend with Tailwind CSS
+- **REST API**: Flask-based API for easy integration
+- **No Training Needed**: Uses pre-trained YOLOv8 model out of the box
 
-This project tackles the challenging problem of **multi-label image classification** using the PASCAL VOC 2007 dataset. Unlike multi-class classification where each image belongs to exactly one category, here **each image can contain multiple objects** from 20 different classes simultaneously.
+## Demo
 
-**The Challenge:** Predict which objects (out of 20 possible) are present in each image—an image might contain a **person AND a car AND a dog** all at once!
+Upload an image and get instant object detection with:
+- Bounding boxes for each detected object
+- Confidence scores
+- Class labels
+- Real-time processing
 
-### Sample Outputs
+## Tech Stack
 
-<p align="center">
-<!-- <img src="sample1.png" alt="Sample 1"/> -->
-<img src="sample2.png" alt="Sample 2"/>
-</p>
+### Frontend
+- **React 18.2** - Modern UI framework
+- **Vite** - Lightning-fast build tool
+- **Tailwind CSS** - Utility-first styling
+- **Framer Motion** - Smooth animations
+- **Lucide React** - Beautiful icons
+- **Axios** - HTTP client
 
----
+### Backend
+- **Flask** - Lightweight Python web framework
+- **YOLOv8** - State-of-the-art object detection
+- **Ultralytics** - YOLOv8 implementation
+- **Pillow** - Image processing
+- **Flask-CORS** - Cross-origin resource sharing
 
-## 📊 The Dataset
+## Quick Start
 
-### PASCAL VOC 2007
+### One-Command Startup
 
-The PASCAL Visual Object Classes (VOC) 2007 dataset contains **9,963 images** across **20 object classes**:
-
-| Category | Classes | Count |
-|----------|---------|-------|
-| **Person** | person | 1 class |
-| **Animals** | bird, cat, cow, dog, horse, sheep | 6 classes |
-| **Vehicles** | aeroplane, bicycle, boat, bus, car, motorbike, train | 7 classes |
-| **Indoor** | bottle, chair, dining table, potted plant, sofa, tv/monitor | 6 classes |
-
-### 📈 Dataset Statistics
-
-```
-Training samples: 5,011 unique images
-Total annotations: 7,913 (some images have multiple labels)
-
-Class Distribution:
-├── Most common: person (2,095 instances - 42% of images)
-├── Common: car (761), chair (572), cat (344)
-└── Rare: sheep (97), cow (146), boat (188)
-
-⚠️ Class Imbalance: 21:1 ratio between most and least common classes
-```
-
-### 📥 Dataset Download
-
-Download from the official PASCAL VOC website:
-
----
-
-## 🏗️ Three Architectural Approaches
-
-This project explores three distinct neural network architectures, each with different trade-offs:
-
-### Model 1: Twenty Independent Binary Classifiers 🔢
-
-**Concept:** 20 separate CNNs, each trained to detect one specific class.
-
-```python
-# Each model has one output neuron with sigmoid activation
-model.add(Dense(1))
-model.add(Activation('sigmoid'))
-model.compile(loss='binary_crossentropy', optimizer='adam')
+**Windows:**
+```bash
+git clone https://github.com/magnusaman/objectvision-ai.git
+cd objectvision-ai
+start.bat
 ```
 
-**Architecture:**
-- 20 completely independent CNNs
-- Each with Conv layers → Dense layers → 1 output neuron
-- Binary classification per model
-
-**Pros:**
-- ✅ Simple and clear to understand
-- ✅ Can optimize each model separately
-- ✅ Parallelizable training
-- ✅ Failure isolation
-
-**Cons:**
-- ❌ Massive redundancy (each learns same features)
-- ❌ 20× storage space required
-- ❌ 20× inference time (20 forward passes)
-- ❌ No shared learning between classes
-
----
-
-### Model 2: Shared Feature Extractor with Multi-Output 🔗
-
-**Concept:** One shared CNN for feature extraction, then 20 separate classification heads.
-
-```python
-# Shared convolutional layers (frozen after first training)
-model.add(Conv2D(32, (3, 3), padding='same'))
-model.add(Conv2D(64, (3, 3), padding='same'))
-# ... more conv layers ...
-
-# Class-specific dense layers (trained separately for each class)
-model.add(Dense(512))
-model.add(Dense(1))
-model.add(Activation('sigmoid'))
+**Linux/Mac:**
+```bash
+git clone https://github.com/magnusaman/objectvision-ai.git
+cd objectvision-ai
+chmod +x start.sh
+./start.sh
 ```
 
-**Training Strategy:**
-1. Train first model completely
-2. Copy conv layer weights to subsequent models
-3. Freeze conv layers
-4. Train only final dense layers per class
+This will automatically start both backend and frontend!
 
-**Pros:**
-- ✅ Shared feature extraction
-- ✅ More efficient than Model 1
-- ✅ Better generalization
-- ✅ Class-specific fine-tuning possible
-
-**Cons:**
-- ❌ Still need 20 forward passes for inference
-- ❌ Complex weight management
-- ❌ Conv layers frozen after first training
-
----
-
-### Model 3: Single Multi-Output Network ⭐ (Recommended)
-
-**Concept:** One unified CNN with 20 output neurons, each with independent sigmoid activation.
-
-```python
-# Shared layers for all classes
-model.add(Conv2D(32, (3, 3), padding='same'))
-model.add(Conv2D(64, (3, 3), padding='same'))
-model.add(Flatten())
-model.add(Dense(512))
-
-# Multi-label output: 20 neurons with sigmoid
-model.add(Dense(20))  # ← 20 outputs!
-model.add(Activation('sigmoid'))  # ← Sigmoid, NOT softmax!
-
-model.compile(loss='binary_crossentropy', optimizer='adam')
-```
-
-**Key Features:**
-- **One training run** for all 20 classes
-- **One forward pass** for inference
-- Learns class relationships and co-occurrence patterns
-- Most efficient for deployment
-
-**Pros:**
-- ✅ Maximum efficiency (1 model, 1 forward pass)
-- ✅ Learns class co-occurrence
-- ✅ 20× faster inference
-- ✅ Minimal storage (25MB vs 500MB)
-- ✅ Simple deployment
-
-**Cons:**
-- ❌ Less flexibility for per-class tuning
-- ❌ Class imbalance affects all outputs
-- ❌ Harder to debug specific classes
-
----
-
-## 🔑 Key Concepts: Multi-Label vs Multi-Class
-
-### 🏷️ Multi-Label (This Project)
-- **Question:** "For each class, is it present?"
-- **Output:** `[0, 1, 0, 0, 0, 0, 1, 0, ..., 1, 0]` (binary vector)
-- **Activation:** **Sigmoid** (each output independent)
-- **Loss:** **Binary crossentropy**
-- **Example:** Image → `[person: YES, bicycle: YES, car: YES]`
-
-### 🎯 Multi-Class (Different Problem)
-- **Question:** "Which ONE category is this?"
-- **Output:** `[0, 0, 1, 0, 0]` (one-hot vector)
-- **Activation:** **Softmax** (outputs sum to 1.0)
-- **Loss:** **Categorical crossentropy**
-- **Example:** Image → `"This is a cat"` (NOT dog, NOT car)
-
-> **Critical Insight:** Using softmax for multi-label would force classes to compete, but we need **independence**. Sigmoid allows multiple classes to be predicted simultaneously!
-
----
-
-## 📊 Performance Comparison
-
-| Metric | Model 1<br/>(20 Independent) | Model 2<br/>(Shared Features) | Model 3<br/>(Single Multi-Output) |
-|--------|------------------------------|------------------------------|----------------------------------|
-| **Training Time** | ~3-4 hours | ~1-2 hours | **~30-45 minutes** ⚡ |
-| **Average Accuracy** | 58-75% | 65-80% | **70-75%** |
-| **Inference Time** | 200ms (20 passes) | 200ms (20 passes) | **10ms (1 pass)** ⚡ |
-| **Model Size** | 500MB | 100MB | **25MB** 💾 |
-| **Memory Usage** | High | Medium | **Low** |
-| **Best For** | Different class architectures | Feature sharing + fine-tuning | **Production deployment** 🚀 |
-
-**Winner:** Model 3 offers the best balance of efficiency, performance, and deployability! 🏆
-
----
-
-## 🚀 Getting Started
+## Installation
 
 ### Prerequisites
+- Python 3.8+
+- Node.js 16+
+- npm or yarn
 
+### Backend Setup
+
+1. Clone the repository:
 ```bash
-Python 3.7+
-TensorFlow 2.x
-Keras
-NumPy
-Pandas
-Matplotlib
+git clone https://github.com/magnusaman/objectvision-ai.git
+cd objectvision-ai
 ```
 
-### Installation
-
+2. Create a virtual environment:
 ```bash
-# Clone the repository
-git clone https://github.com/TasnimAhmedEee/Multi-Label-Image-Classification.git
-cd Multi-Label-Image-Classification
-
-# Install dependencies
-pip install tensorflow keras numpy pandas matplotlib scikit-learn
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
 
-### Usage
+3. Install Python dependencies:
+```bash
+pip install -r requirements.txt
+```
 
-1. **Download Dataset:** Get PASCAL VOC 2007 from the link above
-2. **Prepare Data:** Run the data preparation notebook to create label matrices
-3. **Train Model:** Choose one of the three approaches and run training
-4. **Evaluate:** Test on validation set and calculate metrics
+4. The YOLOv8 model is included (52MB)
+
+### Frontend Setup
+
+1. Navigate to the frontend directory:
+```bash
+cd frontend
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+## Usage
+
+### Manual Startup
+
+**Backend:**
+```bash
+cd api
+python flask_app_yolo.py
+```
+The API will be available at `http://localhost:5000`
+
+**Frontend:**
+```bash
+cd frontend
+npm run dev
+```
+The React app will be available at `http://localhost:5173`
+
+### Using the Application
+
+1. Open your browser to `http://localhost:5173`
+2. Upload an image by clicking or dragging & dropping
+3. Wait for the AI to process the image (first request takes ~5 seconds)
+4. View detection results with confidence scores and bounding boxes
+
+### API Endpoints
+
+- `GET /` - Built-in HTML UI
+- `GET /api/health` - Health check
+- `GET /api/info` - Model information
+- `POST /api/predict` - Predict objects (simple)
+- `POST /api/predict_with_boxes` - Predict with bounding boxes
+
+## API Usage
+
+### Predict with Bounding Boxes
 
 ```python
-# Example: Training Model 3 (recommended)
-from model3 import build_model3
+import requests
 
-model = build_model3()
-model.fit(train_generator, epochs=30, validation_data=val_generator)
+url = "http://localhost:5000/api/predict_with_boxes"
+files = {'image': open('test_image.jpg', 'rb')}
+data = {'threshold': 0.5}
 
-# Make predictions
-predictions = model.predict(test_generator)
-binary_predictions = (predictions >= 0.5).astype(int)
+response = requests.post(url, files=files, data=data)
+results = response.json()
+
+print(f"Detected {results['num_detected']} objects:")
+for detection in results['detections']:
+    print(f"- {detection['class']}: {detection['confidence']:.2%}")
 ```
 
----
+### JavaScript/React Example
 
-## 📈 Evaluation Metrics
+```javascript
+const formData = new FormData();
+formData.append('image', imageFile);
 
-The project uses **average cosine similarity** to compare predicted vectors with actual annotation vectors:
+const response = await axios.post(
+  'http://localhost:5000/api/predict_with_boxes',
+  formData,
+  { headers: { 'Content-Type': 'multipart/form-data' } }
+);
 
+const { detections, num_detected } = response.data;
+console.log(`Found ${num_detected} objects`);
+```
+
+## Model Information
+
+### YOLOv8 Architecture
+- **Model Size**: Medium (52MB)
+- **Training Dataset**: COCO 2017 (118K images)
+- **Classes**: 80 object categories
+- **Accuracy**: ~50% mAP
+- **Inference Speed**: <100ms per image
+
+### COCO Dataset Classes
+
+The model can detect 80 different object classes including:
+- **People**: person
+- **Vehicles**: bicycle, car, motorcycle, airplane, bus, train, truck, boat
+- **Animals**: bird, cat, dog, horse, sheep, cow, elephant, bear, zebra, giraffe
+- **Household**: chair, couch, bed, dining table, toilet, tv, laptop, mouse, keyboard
+- **Food**: banana, apple, sandwich, orange, broccoli, carrot, hot dog, pizza, donut, cake
+- And many more!
+
+## Project Structure
+
+```
+Multi-Label-Image-Classification/
+├── api/
+│   └── flask_app_yolo.py       # Flask REST API
+├── app/
+│   ├── inference_yolo.py       # YOLOv8 classifier
+│   ├── config.py               # Configuration
+│   └── utils.py                # Utility functions
+├── frontend/
+│   ├── src/
+│   │   ├── components/         # React components
+│   │   │   ├── Header.jsx
+│   │   │   ├── Hero.jsx
+│   │   │   ├── UploadSection.jsx
+│   │   │   ├── ResultsDisplay.jsx
+│   │   │   ├── Features.jsx
+│   │   │   ├── Stats.jsx
+│   │   │   └── Footer.jsx
+│   │   ├── App.jsx
+│   │   ├── main.jsx
+│   │   └── index.css
+│   ├── package.json
+│   ├── vite.config.js
+│   └── tailwind.config.js
+├── test_images/                # Sample test images
+├── requirements.txt
+└── README.md
+```
+
+## Configuration
+
+### Backend Configuration
+
+Edit `app/config.py`:
 ```python
-from sklearn.metrics.pairwise import cosine_similarity
-
-# Calculate cosine similarity between predictions and ground truth
-similarity = cosine_similarity(y_true, y_pred)
-average_similarity = similarity.mean()
+UPLOAD_FOLDER = 'uploads'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'bmp', 'webp'}
+MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # 16MB max file size
 ```
 
-**Other useful metrics:**
-- Per-class accuracy
-- Precision and recall per class
-- F1-score
-- Hamming loss
+### Frontend Configuration
 
----
+Edit `frontend/src/components/UploadSection.jsx` to change API endpoint:
+```javascript
+const response = await axios.post(
+  'http://localhost:5000/api/predict_with_boxes',
+  formData
+);
+```
 
-## Key Learnings
+## Performance
 
-### Technical Insights
+- **Inference Time**: 50-100ms per image
+- **Model Size**: 52MB (medium), other sizes available (6MB to 136MB)
+- **Accuracy**: ~50% mAP on COCO validation set
+- **Supported Formats**: PNG, JPG, JPEG, GIF, BMP, WEBP
+- **Max Image Size**: 16MB
 
-1. **Sigmoid is mandatory** for multi-label (NOT softmax)
-2. **Binary crossentropy** even with 20 classes (each output is independent)
-3. **class_mode='raw'** in Keras ImageDataGenerator for multi-label
-4. **Class imbalance** significantly impacts training (person: 2,095 vs sheep: 97)
-5. **Feature sharing** dramatically improves efficiency without sacrificing accuracy
+## Development
 
-### Common Pitfalls to Avoid
+### Building for Production
 
-| ❌ Wrong | ✅ Correct | Why |
-|---------|-----------|-----|
-| Softmax activation | Sigmoid activation | Classes are independent, not mutually exclusive |
-| Categorical crossentropy | Binary crossentropy | Each output is a separate binary decision |
-| `class_mode='categorical'` | `class_mode='raw'` | Need actual label arrays, not one-hot |
-| Fixed threshold 0.5 | Per-class threshold tuning | Different classes need different thresholds |
+Frontend:
+```bash
+cd frontend
+npm run build
+```
 
----
+The production build will be in `frontend/dist/`.
 
-## Visual Results
+### Running Tests
 
-### Sample Predictions
+```bash
+# Test the model directly
+python app/inference_yolo.py
 
-**Image 1:**
-- **Ground Truth:** `person, bicycle, car`
-- **Prediction:** `person, bicycle, car` ✅
+# Test with sample images
+python test_inference.py
+```
 
-**Image 2:**
-- **Ground Truth:** `cat, sofa, potted plant`
-- **Prediction:** `cat, sofa, potted plant, chair` (chair = false positive)
+## Deployment
 
----
+See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed deployment instructions.
 
-## 🔬 Future Improvements
+### Quick Deploy
 
-- [ ] **Transfer Learning:** Use pre-trained networks (ResNet, EfficientNet)
-- [ ] **Attention Mechanisms:** Focus on relevant image regions per class
-- [ ] **Focal Loss:** Better handling of class imbalance
-- [ ] **Threshold Optimization:** Per-class threshold tuning
-- [ ] **Ensemble Methods:** Combine multiple models
-- [ ] **Class Weights:** Handle imbalanced data better
+**Backend** (Render):
+1. Connect GitHub repository
+2. Set build command: `pip install -r requirements.txt`
+3. Set start command: `python api/flask_app_yolo.py`
+4. Deploy
 
----
+**Frontend** (Netlify/Vercel):
+1. Connect GitHub repository
+2. Set base directory: `frontend`
+3. Set build command: `npm run build`
+4. Set publish directory: `dist`
+5. Add environment variable: `VITE_API_URL=<your-backend-url>`
+6. Deploy
 
-## 📚 Related Resources
+The application can be deployed to:
+- **Backend**: Render, Railway, Fly.io, AWS EC2, Google Cloud Run
+- **Frontend**: Netlify, Vercel, GitHub Pages, AWS S3 + CloudFront
 
-### 📖 Comprehensive Blog Post
-For detailed explanations, code walkthroughs, and theoretical insights:
-**[Multi-Label Image Classification on Analytical Man](https://analyticalman.com/multi-label-image-classification/)**
+## Contributing
 
-### 🔗 Additional Reading
-- [Multi-Class Image Classification](https://analyticalman.com/comprehensive_multiclass_blog.html) - When images belong to exactly one category
-- [PASCAL VOC Challenge](http://host.robots.ox.ac.uk/pascal/VOC/voc2007/)
-- [Keras Documentation](https://keras.io/guides/)
+Contributions are welcome! Please feel free to submit a Pull Request.
 
----
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Acknowledgments
 
-- **Dataset:** PASCAL VOC 2007 Challenge
-- **Blog Post:** Comprehensive explanation at [analyticalman.com](https://analyticalman.com/multi-label-image-classification/)
+- **YOLOv8** by Ultralytics
+- **COCO Dataset** by Microsoft
+- **React** by Meta
+- **Tailwind CSS** by Tailwind Labs
+- **Framer Motion** by Framer
 
+## Team
+
+This project was developed by students from RGIPT as part of CVPR Project 2024:
+
+- **Aman Anand** (22IT3004) - [GitHub](https://github.com/magnusaman) | [LinkedIn](https://www.linkedin.com/in/aman7anand/)
+- Aayush Kumar (22IT3001) - [LinkedIn](https://www.linkedin.com/in/aayush-kumar-debugging/)
+- Aditya Kumar (22IT3002) - [LinkedIn](https://www.linkedin.com/in/adityakumar8018/)
+- Akshat Goyal (22IT3003) - [LinkedIn](https://www.linkedin.com/in/akshatg1403/)
+- Aman Kumar Gupta (22IT3005) - [LinkedIn](https://www.linkedin.com/in/amangupta8864/)
+- Tanmay Amrutkar (22IT3006) - [LinkedIn](https://www.linkedin.com/in/tanmay-amrutkar/)
+- Arnav Sao (22IT3009) - [LinkedIn](https://www.linkedin.com/in/arnavsao/)
+- Aryan Singh (22IT3010) - [LinkedIn](https://www.linkedin.com/in/aryankumarsingh0704/)
+- Jagriti Priya (22IT3017) - [LinkedIn](https://www.linkedin.com/in/jagritipriya21/)
+- Payal Singh (22IT3028) - [LinkedIn](https://www.linkedin.com/in/payalsingh2209/)
+
+## Contact
+
+For questions or support:
+- Email: 22it3004@rgipt.ac.in
+- GitHub: [@magnusaman](https://github.com/magnusaman)
+- LinkedIn: [Aman Anand](https://www.linkedin.com/in/aman7anand/)
 
 ---
 
-## 📧 Contact
-
-**Author:** Tasnim Ahmed  
-**Website:** [analyticalman.com](https://analyticalman.com)  
-**GitHub:** [@TasnimAhmedEee](https://github.com/TasnimAhmedEee)
-
----
-
-
-<p align="center">
-  <b>⭐ If you found this project helpful, please give it a star! ⭐</b>
-</p>
-
-<p align="center">
-  Read the full story at <a href="https://analyticalman.com/multi-label-image-classification/">Analytical Man</a>
-</p>
-
-
+Made with ❤️ using YOLOv8 & React | CVPR Project 2024 | RGIPT
