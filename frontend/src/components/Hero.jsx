@@ -50,7 +50,7 @@ export default function Hero() {
             className="glass-morphism px-6 py-3 rounded-full flex items-center space-x-2"
           >
             <Target className="w-5 h-5 text-green-400" />
-            <span className="text-sm font-medium">~50% mAP Accuracy</span>
+            <span className="text-sm font-medium">~54% mAP Accuracy</span>
           </motion.div>
 
           <motion.div
@@ -58,7 +58,7 @@ export default function Hero() {
             className="glass-morphism px-6 py-3 rounded-full flex items-center space-x-2"
           >
             <Brain className="w-5 h-5 text-primary-400" />
-            <span className="text-sm font-medium">YOLOv8 Architecture</span>
+            <span className="text-sm font-medium">YOLOv8-XLarge</span>
           </motion.div>
         </div>
       </motion.div>

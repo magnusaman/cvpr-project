@@ -1,7 +1,7 @@
 # ObjectVision AI - Advanced Object Detection
 
 ![ObjectVision AI](https://img.shields.io/badge/AI-Object%20Detection-blueviolet)
-![YOLOv8](https://img.shields.io/badge/YOLOv8-Medium-green)
+![YOLOv8](https://img.shields.io/badge/YOLOv8-XLarge-green)
 ![COCO](https://img.shields.io/badge/Dataset-COCO-orange)
 ![React](https://img.shields.io/badge/React-18.2-blue)
 ![Flask](https://img.shields.io/badge/Flask-API-lightgrey)
@@ -11,7 +11,7 @@ A state-of-the-art object detection web application powered by YOLOv8 architectu
 ## Features
 
 - **Lightning Fast**: Real-time object detection with millisecond inference speeds
-- **High Accuracy**: ~50% mAP accuracy using YOLOv8 architecture
+- **High Accuracy**: ~54% mAP accuracy using YOLOv8-XLarge architecture
 - **80+ Classes**: Detect a wide variety of objects from the COCO dataset
 - **Beautiful UI**: Modern, professional React frontend with Tailwind CSS
 - **REST API**: Flask-based API for easy integration
@@ -174,11 +174,11 @@ console.log(`Found ${num_detected} objects`);
 ## Model Information
 
 ### YOLOv8 Architecture
-- **Model Size**: Medium (52MB)
+- **Model Size**: XLarge (136MB)
 - **Training Dataset**: COCO 2017 (118K images)
 - **Classes**: 80 object categories
-- **Accuracy**: ~50% mAP
-- **Inference Speed**: <100ms per image
+- **Accuracy**: ~54% mAP (best accuracy)
+- **Inference Speed**: ~150-200ms per image
 
 ### COCO Dataset Classes
 
