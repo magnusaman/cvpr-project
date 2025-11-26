@@ -23,10 +23,12 @@ app.config['MAX_CONTENT_LENGTH'] = MAX_CONTENT_LENGTH
 
 # CORS Configuration - Allow frontend to access API
 CORS(app, origins=[
-    'http://localhost:5173',  # Local development
+    'http://localhost:3000',  # React dev server
+    'http://localhost:5173',  # Vite dev server
+    'http://localhost:8080',  # Alternative dev server
     'https://objectvision-frontend.onrender.com',  # Production frontend (update after deploy)
     'https://*.onrender.com'  # All Render domains
-])
+], supports_credentials=True)
 
 # Initialize classifier (global instance)
 classifier = None
