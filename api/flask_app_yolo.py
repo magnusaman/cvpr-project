@@ -22,31 +22,31 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = MAX_CONTENT_LENGTH
 
 # CORS Configuration - Allow frontend to access API
-CORS(app, origins=[
-    'http://localhost:3000',  # React dev server
-    'http://localhost:5173',  # Vite dev server
-    'http://localhost:8080',  # Alternative dev server
-    'https://*.vercel.app',   # All Vercel domains
-    'https://*.railway.app',  # All Railway domains
-], supports_credentials=True)
+CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)  # Allow all origins for local development
 
-# Initialize classifier (global instance)
-classifier = None
+# Initialize classifiers (global instances)
+classifiers = {}
 
 
 def init_classifier():
-    """Initialize YOLOv8 classifier on app startup"""
-    global classifier
+    """Initialize YOLOv8 classifiers on app startup"""
+    global classifiers
     print("\n" + "=" * 60)
-    print("Initializing YOLOv8 Classifier")
+    print("Initializing YOLOv8 Classifiers")
     print("=" * 60)
 
-    # Use medium model by default (good balance)
+    # Load both medium and large models
     # Options: 'n' (fastest), 's', 'm', 'l', 'x' (most accurate)
-    classifier = YOLOClassifier(model_size='m', threshold=0.5)
+    print("Loading YOLOv8-Medium...")
+    classifiers['medium'] = YOLOClassifier(model_size='m', threshold=0.5)
+    print("✓ YOLOv8-Medium loaded")
+
+    print("Loading YOLOv8-Large...")
+    classifiers['large'] = YOLOClassifier(model_size='l', threshold=0.5)
+    print("✓ YOLOv8-Large loaded")
 
     print("=" * 60)
-    print("✓ YOLOv8 Model Ready!")
+    print("✓ All YOLOv8 Models Ready!")
     print("=" * 60)
 
 
@@ -354,19 +354,24 @@ def health_check():
     """Health check endpoint"""
     return jsonify({
         'status': 'healthy',
-        'model_loaded': classifier is not None,
+        'models_loaded': len(classifiers) > 0,
         'model_type': 'YOLOv8',
-        'model_info': classifier.get_model_info() if classifier else None
+        'available_models': list(classifiers.keys())
     })
 
 
 @app.route('/api/info', methods=['GET'])
 def model_info():
     """Get model information"""
-    if classifier is None:
-        return jsonify({'error': 'Classifier not initialized'}), 500
+    if not classifiers:
+        return jsonify({'error': 'Classifiers not initialized'}), 500
 
-    info = classifier.get_model_info()
+    info = {
+        'models': {
+            model_name: classifier.get_model_info()
+            for model_name, classifier in classifiers.items()
+        }
+    }
     return jsonify(info)
 
 
@@ -378,14 +383,15 @@ def predict():
     Expects:
         - file or image: Image file (multipart/form-data)
         - threshold (optional): Confidence threshold (0.0 to 1.0)
+        - model (optional): 'medium' or 'large' (default: 'medium')
 
     Returns:
         JSON with prediction results
     """
-    if classifier is None:
+    if not classifiers:
         return jsonify({
             'success': False,
-            'error': 'Classifier not initialized'
+            'error': 'Classifiers not initialized'
         }), 500
 
     # Accept both 'file' and 'image' field names
@@ -414,6 +420,13 @@ def predict():
         }), 400
 
     try:
+        # Get model selection (default to medium)
+        model_selection = request.form.get('model', 'medium').lower()
+        if model_selection not in classifiers:
+            model_selection = 'medium'  # Fallback
+
+        classifier = classifiers[model_selection]
+
         # Get custom threshold if provided
         threshold = request.form.get('threshold', None)
         if threshold:
@@ -428,6 +441,7 @@ def predict():
 
         return jsonify({
             'success': True,
+            'model': model_selection,
             'predictions': predictions
         })
 
@@ -444,11 +458,12 @@ def predict_with_boxes():
     Predict objects with bounding boxes
 
     Returns predictions plus bounding box coordinates
+    Accepts 'model' parameter: 'medium', 'large', or 'both'
     """
-    if classifier is None:
+    if not classifiers:
         return jsonify({
             'success': False,
-            'error': 'Classifier not initialized'
+            'error': 'Classifiers not initialized'
         }), 500
 
     # Accept both 'file' and 'image' field names
@@ -475,18 +490,38 @@ def predict_with_boxes():
         }), 400
 
     try:
+        # Get model selection (default to medium)
+        model_selection = request.form.get('model', 'medium').lower()
         threshold = request.form.get('threshold', None)
-        if threshold:
-            threshold = float(threshold)
-            classifier.set_threshold(threshold)
 
         image_data = file.read()
 
-        # Make prediction with bounding boxes
-        predictions = classifier.predict_with_boxes(image_data)
+        # Handle different model selections
+        if model_selection == 'both':
+            # Run both models and return comparison
+            results = {}
+            for model_name, classifier in classifiers.items():
+                if threshold:
+                    classifier.set_threshold(float(threshold))
+                results[model_name] = classifier.predict_with_boxes(image_data)
 
-        # Return predictions directly (not nested under 'predictions')
-        return jsonify(predictions)
+            return jsonify({
+                'mode': 'comparison',
+                'results': results
+            })
+        else:
+            # Run single model
+            if model_selection not in classifiers:
+                model_selection = 'medium'  # Fallback to medium
+
+            classifier = classifiers[model_selection]
+            if threshold:
+                classifier.set_threshold(float(threshold))
+
+            predictions = classifier.predict_with_boxes(image_data)
+            predictions['model'] = model_selection
+
+            return jsonify(predictions)
 
     except Exception as e:
         return jsonify({

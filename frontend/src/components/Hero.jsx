@@ -32,8 +32,9 @@ export default function Hero() {
         </h1>
 
         <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
-          State-of-the-art AI model trained on <span className="text-primary-400 font-semibold">COCO dataset</span> detecting{' '}
-          <span className="text-purple-400 font-semibold">80+ object classes</span> with cutting-edge accuracy
+          Choose between <span className="text-primary-400 font-semibold">YOLOv8-Medium</span> and{' '}
+          <span className="text-purple-400 font-semibold">YOLOv8-Large</span> models, or compare both side-by-side.
+          Trained on COCO dataset with <span className="text-pink-400 font-semibold">80+ object classes</span>
         </p>
 
         <div className="flex flex-wrap justify-center gap-4 mb-12">

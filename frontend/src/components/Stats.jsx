@@ -54,10 +54,10 @@ export default function Stats() {
             className="text-center mb-12"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-3">
-              Powered by <span className="gradient-text">Advanced Technology</span>
+              <span className="gradient-text">YOLOv8</span> Model Performance
             </h2>
             <p className="text-gray-400">
-              Industry-leading performance metrics backed by rigorous training
+              Pre-trained on COCO dataset with 80 object classes for accurate real-time detection
             </p>
           </motion.div>
 

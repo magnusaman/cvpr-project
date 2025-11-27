@@ -87,10 +87,14 @@ export default function Footer() {
             <h3 className="text-lg font-semibold mb-4 gradient-text">About</h3>
             <ul className="space-y-2">
               <li>
-                <span className="text-gray-400">CVPR Project 2024</span>
+                <a href="https://github.com/magnusaman/cvpr-project" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-primary-400 transition-colors">
+                  CVPR Project 2025
+                </a>
               </li>
               <li>
-                <span className="text-gray-400">RGIPT</span>
+                <a href="https://www.rgipt.ac.in/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-primary-400 transition-colors">
+                  RGIPT
+                </a>
               </li>
               <li>
                 <a href="mailto:22it3004@rgipt.ac.in" className="text-gray-400 hover:text-primary-400 transition-colors">

@@ -36,7 +36,7 @@ export default function Header() {
             </motion.div>
 
             <motion.a
-              href="https://github.com"
+              href="https://github.com/magnusaman/cvpr-project"
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.1, rotate: 360 }}

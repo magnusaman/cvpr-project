@@ -4,6 +4,7 @@ import Header from './components/Header'
 import Hero from './components/Hero'
 import UploadSection from './components/UploadSection'
 import ResultsDisplay from './components/ResultsDisplay'
+import BatchResultsDisplay from './components/BatchResultsDisplay'
 import Features from './components/Features'
 import Stats from './components/Stats'
 import Team from './components/Team'
@@ -11,19 +12,30 @@ import Footer from './components/Footer'
 
 function App() {
   const [results, setResults] = useState(null)
+  const [batchResults, setBatchResults] = useState(null)
   const [loading, setLoading] = useState(false)
   const [uploadedImage, setUploadedImage] = useState(null)
 
   const handleAnalysis = (analysisResults, imageUrl) => {
     setResults(analysisResults)
     setUploadedImage(imageUrl)
+    setBatchResults(null)
+  }
+
+  const handleBatchAnalysis = (batchAnalysisResults) => {
+    setBatchResults(batchAnalysisResults)
+    setResults(null)
+    setUploadedImage(null)
   }
 
   const handleReset = () => {
     setResults(null)
+    setBatchResults(null)
     setUploadedImage(null)
     setLoading(false)
   }
+
+  const hasResults = results || batchResults
 
   return (
     <div className="min-h-screen relative overflow-hidden">
@@ -42,7 +54,7 @@ function App() {
 
       <main className="container mx-auto px-4 py-8">
         <AnimatePresence mode="wait">
-          {!results ? (
+          {!hasResults ? (
             <motion.div
               key="upload"
               initial={{ opacity: 0, y: 20 }}
@@ -54,11 +66,25 @@ function App() {
               <Stats />
               <UploadSection
                 onAnalysis={handleAnalysis}
+                onBatchAnalysis={handleBatchAnalysis}
                 loading={loading}
                 setLoading={setLoading}
               />
               <Features />
               <Team />
+            </motion.div>
+          ) : batchResults ? (
+            <motion.div
+              key="batch-results"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
+            >
+              <BatchResultsDisplay
+                batchResults={batchResults}
+                onReset={handleReset}
+              />
             </motion.div>
           ) : (
             <motion.div
