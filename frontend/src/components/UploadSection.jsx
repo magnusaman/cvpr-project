@@ -54,7 +54,8 @@ export default function UploadSection({ onAnalysis, loading, setLoading }) {
     formData.append('image', file)
 
     try {
-      const response = await axios.post('http://localhost:5000/api/predict_with_boxes', formData, {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+      const response = await axios.post(`${apiUrl}/api/predict_with_boxes`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }

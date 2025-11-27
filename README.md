@@ -274,27 +274,66 @@ python test_inference.py
 
 ## Deployment
 
-See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed deployment instructions.
+### Deploy Backend on Railway
 
-### Quick Deploy
+1. **Create Railway Account**
+   - Go to [railway.app](https://railway.app) and sign up with GitHub
 
-**Backend** (Render):
-1. Connect GitHub repository
-2. Set build command: `pip install -r requirements.txt`
-3. Set start command: `python api/flask_app_yolo.py`
-4. Deploy
+2. **Create New Project**
+   - Click "New Project" → "Deploy from GitHub repo"
+   - Select this repository
 
-**Frontend** (Netlify/Vercel):
-1. Connect GitHub repository
-2. Set base directory: `frontend`
-3. Set build command: `npm run build`
-4. Set publish directory: `dist`
-5. Add environment variable: `VITE_API_URL=<your-backend-url>`
-6. Deploy
+3. **Configure Settings**
+   - Railway will auto-detect Python
+   - It will use `railway.json` for configuration
+   - Start command: `python api/flask_app_yolo.py`
 
-The application can be deployed to:
-- **Backend**: Render, Railway, Fly.io, AWS EC2, Google Cloud Run
-- **Frontend**: Netlify, Vercel, GitHub Pages, AWS S3 + CloudFront
+4. **Deploy**
+   - Click "Deploy" and wait for deployment
+   - Get your Railway URL (e.g., `https://your-app.up.railway.app`)
+
+5. **Test Backend**
+   - Visit `https://your-app.up.railway.app/api/health`
+   - Should return: `{"status": "healthy", "model_loaded": true}`
+
+### Deploy Frontend on Vercel
+
+1. **Create Vercel Account**
+   - Go to [vercel.com](https://vercel.com) and sign up with GitHub
+
+2. **Import Project**
+   - Click "Add New" → "Project"
+   - Import this repository
+
+3. **Configure Build Settings**
+   - Framework Preset: `Vite`
+   - Root Directory: `frontend`
+   - Build Command: `npm run build`
+   - Output Directory: `dist`
+
+4. **Add Environment Variable**
+   - Go to "Environment Variables"
+   - Add: `VITE_API_URL` = `https://your-railway-app.up.railway.app`
+   - (Replace with your actual Railway backend URL from step 4 above)
+
+5. **Deploy**
+   - Click "Deploy" and wait for deployment
+   - Your frontend will be live at `https://your-app.vercel.app`
+
+### Quick Reference
+
+| Service | URL Pattern | Purpose |
+|---------|------------|---------|
+| Railway | `https://your-app.up.railway.app` | Backend API |
+| Vercel | `https://your-app.vercel.app` | Frontend UI |
+
+### Important Notes
+
+- Deploy **backend first** to get the Railway URL
+- Then deploy frontend with the Railway URL as `VITE_API_URL`
+- Both services have generous free tiers
+- Railway: 500 hours/month free
+- Vercel: Unlimited free deployments
 
 ## Contributing
 

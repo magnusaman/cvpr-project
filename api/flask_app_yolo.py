@@ -26,8 +26,8 @@ CORS(app, origins=[
     'http://localhost:3000',  # React dev server
     'http://localhost:5173',  # Vite dev server
     'http://localhost:8080',  # Alternative dev server
-    'https://objectvision-frontend.onrender.com',  # Production frontend (update after deploy)
-    'https://*.onrender.com'  # All Render domains
+    'https://*.vercel.app',   # All Vercel domains
+    'https://*.railway.app',  # All Railway domains
 ], supports_credentials=True)
 
 # Initialize classifier (global instance)
@@ -496,6 +496,8 @@ def predict_with_boxes():
 
 
 if __name__ == '__main__':
+    import os
+
     print("=" * 60)
     print("Multi-Label Image Classification API (YOLOv8)")
     print("=" * 60)
@@ -503,8 +505,11 @@ if __name__ == '__main__':
     # Initialize classifier
     init_classifier()
 
+    # Get port from environment variable (Railway provides this)
+    port = int(os.environ.get('PORT', 5000))
+
     print("\nStarting Flask server...")
-    print("API will be available at: http://localhost:5000")
+    print(f"API will be available at: http://0.0.0.0:{port}")
     print("\nEndpoints:")
     print("  - GET  /                    : Web interface")
     print("  - GET  /api/health          : Health check")
@@ -516,4 +521,5 @@ if __name__ == '__main__':
     print("✨ No training needed - works out of the box!")
     print("=" * 60)
 
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    # Production-ready settings
+    app.run(host='0.0.0.0', port=port, debug=False)
