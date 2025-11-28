@@ -65,7 +65,7 @@ export default function ResultsDisplay({ results, imageUrl, onReset }) {
 
           <div className="text-center">
             <h2 className="text-2xl font-bold gradient-text">Model Comparison</h2>
-            <p className="text-sm text-gray-400">YOLOv8-Medium vs YOLOv8-Large</p>
+            <p className="text-sm text-gray-400">ObjectVision AI vs ObjectVision AI+</p>
           </div>
 
           <div className="flex items-center space-x-3">
@@ -90,7 +90,7 @@ export default function ResultsDisplay({ results, imageUrl, onReset }) {
             className="glass-morphism rounded-3xl p-6"
           >
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xl font-bold text-primary-400">YOLOv8-Medium</h3>
+              <h3 className="text-xl font-bold text-primary-400">ObjectVision AI</h3>
               <span className="text-sm glass-morphism px-3 py-1 rounded-full">Faster</span>
             </div>
 
@@ -141,7 +141,7 @@ export default function ResultsDisplay({ results, imageUrl, onReset }) {
             className="glass-morphism rounded-3xl p-6"
           >
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xl font-bold text-purple-400">YOLOv8-Large</h3>
+              <h3 className="text-xl font-bold text-purple-400">ObjectVision AI+</h3>
               <span className="text-sm glass-morphism px-3 py-1 rounded-full">More Accurate</span>
             </div>
 
@@ -396,7 +396,7 @@ export default function ResultsDisplay({ results, imageUrl, onReset }) {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
           <div>
             <div className="text-gray-400 text-sm mb-1">Model</div>
-            <div className="font-semibold capitalize">YOLOv8-{results.model || 'Medium'}</div>
+            <div className="font-semibold capitalize">ObjectVision AI{results.model === 'large' ? '+' : ''}</div>
           </div>
           <div>
             <div className="text-gray-400 text-sm mb-1">Dataset</div>

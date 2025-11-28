@@ -11,7 +11,7 @@ const features = [
   {
     icon: Eye,
     title: 'High Accuracy',
-    description: 'State-of-the-art YOLOv8 architecture trained on COCO dataset',
+    description: 'Advanced deep learning models trained on COCO dataset',
     color: 'from-primary-500 to-blue-500'
   },
   {

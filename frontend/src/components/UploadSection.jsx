@@ -174,7 +174,7 @@ export default function UploadSection({ onAnalysis, onBatchAnalysis, loading, se
           {/* Model Selection */}
           <div className="mb-8">
             <h3 className="text-lg font-semibold mb-4 text-center">
-              <span className="gradient-text">Select YOLOv8 Model</span>
+              <span className="gradient-text">Select Detection Model</span>
             </h3>
             <div className="flex justify-center gap-3">
               <motion.button
@@ -187,7 +187,7 @@ export default function UploadSection({ onAnalysis, onBatchAnalysis, loading, se
                     : 'glass-morphism hover:bg-white/10 text-gray-300'
                 }`}
               >
-                Medium (Faster)
+                ObjectVision AI (Faster)
               </motion.button>
               <motion.button
                 onClick={() => setSelectedModel('large')}
@@ -199,7 +199,7 @@ export default function UploadSection({ onAnalysis, onBatchAnalysis, loading, se
                     : 'glass-morphism hover:bg-white/10 text-gray-300'
                 }`}
               >
-                Large (More Accurate)
+                ObjectVision AI+ (More Accurate)
               </motion.button>
               <motion.button
                 onClick={() => setSelectedModel('both')}

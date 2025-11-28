@@ -340,7 +340,7 @@ export default function BatchResultsDisplay({ batchResults, onReset }) {
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                           {/* Medium Model */}
                           <div>
-                            <h4 className="font-semibold mb-2 text-primary-400">YOLOv8-Medium</h4>
+                            <h4 className="font-semibold mb-2 text-primary-400">ObjectVision AI</h4>
                             <img src={result.imageUrl} alt={result.filename} className="w-full rounded-lg mb-2" />
                             <div className="space-y-1 max-h-48 overflow-y-auto">
                               {result.results.results?.medium?.detections?.map((detection, dIndex) => (
@@ -356,7 +356,7 @@ export default function BatchResultsDisplay({ batchResults, onReset }) {
 
                           {/* Large Model */}
                           <div>
-                            <h4 className="font-semibold mb-2 text-purple-400">YOLOv8-Large</h4>
+                            <h4 className="font-semibold mb-2 text-purple-400">ObjectVision AI+</h4>
                             <img src={result.imageUrl} alt={result.filename} className="w-full rounded-lg mb-2" />
                             <div className="space-y-1 max-h-48 overflow-y-auto">
                               {result.results.results?.large?.detections?.map((detection, dIndex) => (
