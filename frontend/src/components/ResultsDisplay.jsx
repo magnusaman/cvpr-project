@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { ArrowLeft, Download, Share2, CheckCircle, Box, Sparkles } from 'lucide-react'
+import ImageWithBoxes from './ImageWithBoxes'
 
 export default function ResultsDisplay({ results, imageUrl, onReset }) {
   // Check if this is comparison mode
@@ -112,7 +113,12 @@ export default function ResultsDisplay({ results, imageUrl, onReset }) {
 
             {/* Image */}
             <div className="relative rounded-xl overflow-hidden mb-4">
-              <img src={imageUrl} alt="Medium Model" className="w-full h-auto" />
+              <ImageWithBoxes
+                imageUrl={imageUrl}
+                detections={mediumResults.detections}
+                width={mediumResults.width}
+                height={mediumResults.height}
+              />
             </div>
 
             {/* Detections */}
@@ -163,7 +169,12 @@ export default function ResultsDisplay({ results, imageUrl, onReset }) {
 
             {/* Image */}
             <div className="relative rounded-xl overflow-hidden mb-4">
-              <img src={imageUrl} alt="Large Model" className="w-full h-auto" />
+              <ImageWithBoxes
+                imageUrl={imageUrl}
+                detections={largeResults.detections}
+                width={largeResults.width}
+                height={largeResults.height}
+              />
             </div>
 
             {/* Detections */}
@@ -300,10 +311,11 @@ export default function ResultsDisplay({ results, imageUrl, onReset }) {
         >
           <h2 className="text-2xl font-bold mb-4 gradient-text">Analyzed Image</h2>
           <div className="relative rounded-2xl overflow-hidden">
-            <img
-              src={imageUrl}
-              alt="Analyzed"
-              className="w-full h-auto"
+            <ImageWithBoxes
+              imageUrl={imageUrl}
+              detections={results.detections}
+              width={results.width}
+              height={results.height}
             />
             <div className="absolute top-4 right-4 glass-morphism px-4 py-2 rounded-lg">
               <span className="text-sm font-medium">

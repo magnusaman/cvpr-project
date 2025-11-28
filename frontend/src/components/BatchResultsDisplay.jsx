@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowLeft, Download, CheckCircle, XCircle, Box, Sparkles, ChevronDown, ChevronUp, Image as ImageIcon, FileText, Clock } from 'lucide-react'
+import ImageWithBoxes from './ImageWithBoxes'
 
 export default function BatchResultsDisplay({ batchResults, onReset }) {
   const [expandedIndex, setExpandedIndex] = useState(null)
@@ -341,7 +342,14 @@ export default function BatchResultsDisplay({ batchResults, onReset }) {
                           {/* Medium Model */}
                           <div>
                             <h4 className="font-semibold mb-2 text-primary-400">ObjectVision AI</h4>
-                            <img src={result.imageUrl} alt={result.filename} className="w-full rounded-lg mb-2" />
+                            <div className="w-full rounded-lg mb-2 overflow-hidden">
+                              <ImageWithBoxes
+                                imageUrl={result.imageUrl}
+                                detections={result.results.results?.medium?.detections}
+                                width={result.results.results?.medium?.width}
+                                height={result.results.results?.medium?.height}
+                              />
+                            </div>
                             <div className="space-y-1 max-h-48 overflow-y-auto">
                               {result.results.results?.medium?.detections?.map((detection, dIndex) => (
                                 <div key={dIndex} className="flex items-center justify-between bg-white/5 rounded p-2 text-sm">
@@ -357,7 +365,14 @@ export default function BatchResultsDisplay({ batchResults, onReset }) {
                           {/* Large Model */}
                           <div>
                             <h4 className="font-semibold mb-2 text-purple-400">ObjectVision AI+</h4>
-                            <img src={result.imageUrl} alt={result.filename} className="w-full rounded-lg mb-2" />
+                            <div className="w-full rounded-lg mb-2 overflow-hidden">
+                              <ImageWithBoxes
+                                imageUrl={result.imageUrl}
+                                detections={result.results.results?.large?.detections}
+                                width={result.results.results?.large?.width}
+                                height={result.results.results?.large?.height}
+                              />
+                            </div>
                             <div className="space-y-1 max-h-48 overflow-y-auto">
                               {result.results.results?.large?.detections?.map((detection, dIndex) => (
                                 <div key={dIndex} className="flex items-center justify-between bg-white/5 rounded p-2 text-sm">
@@ -373,8 +388,13 @@ export default function BatchResultsDisplay({ batchResults, onReset }) {
                       ) : (
                         // Single model display
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <div>
-                            <img src={result.imageUrl} alt={result.filename} className="w-full rounded-lg" />
+                          <div className="overflow-hidden rounded-lg">
+                            <ImageWithBoxes
+                              imageUrl={result.imageUrl}
+                              detections={result.results?.detections}
+                              width={result.results?.width}
+                              height={result.results?.height}
+                            />
                           </div>
                           <div className="space-y-2 max-h-64 overflow-y-auto">
                             <h4 className="font-semibold mb-2">Detections:</h4>
