@@ -69,3 +69,23 @@ frontend/node_modules/
 frontend/dist/
 frontend/.env
 frontend/.env.local
+frontend/.env.production
+frontend/nul
+
+# Claude
+.claude/
+
+# Local deployment notes
+DEPLOYMENT_SUMMARY.md
+MODAL_DEPLOYMENT.md
+PROJECT_REPORT.md
+VERCEL_DEPLOYMENT.md
+VERCEL_DEPLOY_NOW.md
+deploy-vercel.bat
+
+# Unused modal adapters
+api/modal_flask_adapter.py
+api/modal_flask_adapter_v2.py
+
+# ChatGPT generated test images
+test_images/ChatGPT*
