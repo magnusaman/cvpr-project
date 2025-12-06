@@ -11,13 +11,12 @@ Multi-label image classification web application using YOLOv8 pre-trained on COC
 - **Model**: YOLOv8-Medium (~52MB, ~50% mAP, <100ms inference)
 
 ## Deployment Setup (On GitHub)
-- **Backend**: Railway (railway.json, Procfile, runtime.txt)
+- **Backend**: Modal (api/modal_app.py)
 - **Frontend**: Vercel (frontend/vercel.json)
-- **Note**: Using PyTorch CPU-only in requirements.txt to fit Railway's 4GB limit
 
 ### Deployment Steps:
-1. Deploy backend on Railway first → Get URL (e.g., `https://your-app.up.railway.app`)
-2. Deploy frontend on Vercel → Set `VITE_API_URL` env variable to Railway URL
+1. Deploy backend on Modal first → Get URL
+2. Deploy frontend on Vercel → Set `VITE_API_URL` env variable to Modal URL
 3. Frontend uses `import.meta.env.VITE_API_URL` for API calls
 
 ## Local Development (NOT on GitHub)
@@ -66,15 +65,16 @@ npm run dev
 Team photos stored in: `frontend/public/team/22itXXXX.png`
 
 ## Key Files
-- `api/flask_app_yolo.py` - Flask API with YOLOv8, CORS configured for localhost:3000, Vercel, Railway
+- `api/flask_app_yolo.py` - Flask API with YOLOv8 for local development
+- `api/modal_app.py` - Modal deployment for backend
 - `app/inference_yolo.py` - YOLOv8 classifier wrapper
 - `frontend/src/components/` - React components
-- `requirements.txt` - Minimal deps with PyTorch CPU for Railway deployment
+- `requirements.txt` - Python dependencies
 
 ## Important Notes
-- Railway free tier: 4GB limit, no GPU - use CPU PyTorch
+- Backend hosted on Modal
 - Local development: Full GPU support with your RTX 4060
-- CORS is configured for: localhost:3000, localhost:5173, *.vercel.app, *.railway.app
+- CORS is configured for: localhost:3000, localhost:5173, *.vercel.app, *.modal.run
 - YOLOv8-Medium chosen for speed (not XLarge) per user preference
 
 ## Session History
@@ -82,6 +82,5 @@ Team photos stored in: `frontend/public/team/22itXXXX.png`
 2. Integrated YOLOv8 pre-trained model (no training needed)
 3. Added team section with local profile photos
 4. Fixed CORS issues for local development
-5. Configured Railway + Vercel deployment
-6. Reduced requirements.txt to fit Railway 4GB limit (removed TensorFlow, using PyTorch CPU)
-7. Added multi-image batch upload for local use (not pushed to GitHub)
+5. Migrated backend from Railway to Modal
+6. Added multi-image batch upload for local use (not pushed to GitHub)
