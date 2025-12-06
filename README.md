@@ -1,12 +1,14 @@
 # ObjectVision AI - Advanced Object Detection
 
+**[Live Demo](https://cvpr-project.vercel.app)**
+
 ![ObjectVision AI](https://img.shields.io/badge/AI-Object%20Detection-blueviolet)
 ![YOLOv8](https://img.shields.io/badge/YOLOv8-Medium-green)
 ![COCO](https://img.shields.io/badge/Dataset-COCO-orange)
 ![React](https://img.shields.io/badge/React-18.2-blue)
 ![Flask](https://img.shields.io/badge/Flask-API-lightgrey)
 
-A state-of-the-art object detection web application powered by YOLOv8 architecture, trained on the comprehensive COCO dataset. Detect 80+ object classes with real-time processing and exceptional accuracy.
+A multi-label image classification web app using YOLOv8 pretrained on COCO (80 classes). Upload an image and get instant object detection with bounding boxes and confidence scores.
 
 ## Features
 
@@ -274,66 +276,13 @@ python test_inference.py
 
 ## Deployment
 
-### Deploy Backend on Railway
+- **Backend**: [Modal](https://modal.com) - Serverless Python with GPU support
+- **Frontend**: [Vercel](https://vercel.com) - React app hosting
 
-1. **Create Railway Account**
-   - Go to [railway.app](https://railway.app) and sign up with GitHub
-
-2. **Create New Project**
-   - Click "New Project" → "Deploy from GitHub repo"
-   - Select this repository
-
-3. **Configure Settings**
-   - Railway will auto-detect Python
-   - It will use `railway.json` for configuration
-   - Start command: `python api/flask_app_yolo.py`
-
-4. **Deploy**
-   - Click "Deploy" and wait for deployment
-   - Get your Railway URL (e.g., `https://your-app.up.railway.app`)
-
-5. **Test Backend**
-   - Visit `https://your-app.up.railway.app/api/health`
-   - Should return: `{"status": "healthy", "model_loaded": true}`
-
-### Deploy Frontend on Vercel
-
-1. **Create Vercel Account**
-   - Go to [vercel.com](https://vercel.com) and sign up with GitHub
-
-2. **Import Project**
-   - Click "Add New" → "Project"
-   - Import this repository
-
-3. **Configure Build Settings**
-   - Framework Preset: `Vite`
-   - Root Directory: `frontend`
-   - Build Command: `npm run build`
-   - Output Directory: `dist`
-
-4. **Add Environment Variable**
-   - Go to "Environment Variables"
-   - Add: `VITE_API_URL` = `https://your-railway-app.up.railway.app`
-   - (Replace with your actual Railway backend URL from step 4 above)
-
-5. **Deploy**
-   - Click "Deploy" and wait for deployment
-   - Your frontend will be live at `https://your-app.vercel.app`
-
-### Quick Reference
-
-| Service | URL Pattern | Purpose |
-|---------|------------|---------|
-| Railway | `https://your-app.up.railway.app` | Backend API |
-| Vercel | `https://your-app.vercel.app` | Frontend UI |
-
-### Important Notes
-
-- Deploy **backend first** to get the Railway URL
-- Then deploy frontend with the Railway URL as `VITE_API_URL`
-- Both services have generous free tiers
-- Railway: 500 hours/month free
-- Vercel: Unlimited free deployments
+| Service | URL | Purpose |
+|---------|-----|---------|
+| Frontend | [cvpr-project.vercel.app](https://cvpr-project.vercel.app) | Web UI |
+| Backend | Modal | API |
 
 ## Contributing
 
